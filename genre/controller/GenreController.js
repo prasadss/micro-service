@@ -8,14 +8,15 @@ async function index(req, res) {
 async function show(req, res) {
   const genre = await Genre.findById(req.params.id);
 
-  if (!genre) return res.status(400).send("This genre doesnt exist");
+  if (!genre)
+    return res.status(400).send({ message: "This genre doesnt exist" });
 
   res.send(genre);
 }
 
 async function insert(req, res) {
   const { error } = validateGenre(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(400).send({ message: error.details[0].message });
 
   let genre = new Genre({
     name: req.body.name,
@@ -29,14 +30,15 @@ async function insert(req, res) {
 async function remove(req, res) {
   const genre = await Genre.findByIdAndRemove(req.params.id);
 
-  if (!genre) return res.status(400).send("This genre doesnt exist");
+  if (!genre)
+    return res.status(400).send({ message: "This genre doesnt exist" });
 
   res.send(genre);
 }
 
 async function update(req, res) {
   const { error } = validateGenre(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(400).send({ message: error.details[0].message });
 
   const genre = await Genre.findByIdAndUpdate(
     req.params.id,
@@ -47,7 +49,10 @@ async function update(req, res) {
     { new: true }
   );
 
-  if (!genre) return res.status(400).send("This genre doesnt exist");
+  if (!genre)
+    return res
+      .status(400)
+      .send({ message: { message: "This genre doesnt exist" } });
 
   res.send(genre);
 }
