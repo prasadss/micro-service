@@ -6,12 +6,16 @@ async function index(req, res) {
 }
 
 async function show(req, res) {
-  const genre = await Genre.findById(req.params.id);
+  try {
+    const genre = await Genre.findById(req.params.id);
 
-  if (!genre)
-    return res.status(400).send({ message: "This genre doesnt exist" });
+    if (!genre)
+      return res.status(400).send({ message: "This genre doesnt exist" });
 
-  res.send(genre);
+    res.send(genre);
+  } catch (ex) {
+    res.status(500).send("Something went wrong");
+  }
 }
 
 async function insert(req, res) {

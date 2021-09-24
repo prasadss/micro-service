@@ -6,11 +6,15 @@ async function index(req, res) {
 }
 
 async function show(req, res) {
-  const movies = await Movies.findById(req.params.id);
+  try {
+    const movies = await Movies.findById(req.params.id);
 
-  if (!movies) return res.status(400).send("This genre doesnt exist");
+    if (!movies) return res.status(400).send("This genre doesnt exist");
 
-  res.send(movies);
+    res.send(movies);
+  } catch (ex) {
+    res.status(500).send("Something went wrong");
+  }
 }
 
 async function insert(req, res) {
@@ -47,6 +51,10 @@ async function update(req, res) {
     {
       name: req.body.name,
       description: req.body.description,
+      rating: req.body.rating,
+      release_date: req.body.release_date,
+      genere_id: req.body.genere_id,
+      duration: req.body.duration,
     },
     { new: true }
   );

@@ -20,8 +20,6 @@ module.exports.doDeleteCall = async (url, path) => {
 };
 
 function validateResponse(data) {
-  if (Object.keys(data).length == 0) {
-    throw new Error("No Response found");
-  }
+  // logic to validate response
   return data;
 }
